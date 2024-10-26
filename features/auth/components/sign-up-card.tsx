@@ -17,18 +17,26 @@ import {
    CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+   Form,
+   FormControl,
+   FormField,
+   FormItem,
+   FormMessage,
+} from "@/components/ui/form";
 
 interface SignUpCardProps {}
 
 const formSchema = z.object({
+   name: z.string().trim().min(1, "Requered"),
    email: z.string().email(),
-   password: z.string(),
+   password: z.string().min(8, "Minimum of 8 characters requered"),
 });
 
 export const SignUpCard: React.FC<SignUpCardProps> = () => {
    const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
-      defaultValues: { email: "", password: "" },
+      defaultValues: { name: "", email: "", password: "" },
    });
 
    return (
@@ -36,11 +44,11 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
          <CardHeader className="flex justify-center items-center text-center p-7">
             <CardTitle className="text-2xl">Sign Up</CardTitle>
             <CardDescription>
-               By signing up, you agree to our{" "}
+               By signing up, you agree to our&nbsp;
                <Link href="/privacy">
                   <span className="text-blue-700">Privacy Policy </span>
                </Link>
-               and{" "}
+               and&nbsp;
                <Link href="terms">
                   <span className="text-blue-700">Terms of Service</span>
                </Link>
@@ -50,37 +58,61 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
             <DottedSeparator />
          </div>
          <CardContent className="p-6">
-            <form className="space-y-4">
-               <Input
-                  required
-                  type="text"
-                  value={""}
-                  onChange={() => {}}
-                  placeholder="Enter your name"
-                  disabled={false}
-               />
-               <Input
-                  required
-                  type="email"
-                  value={""}
-                  onChange={() => {}}
-                  placeholder="Enter email address"
-                  disabled={false}
-               />
-               <Input
-                  required
-                  type="password"
-                  value={""}
-                  onChange={() => {}}
-                  placeholder="Enter email password"
-                  disabled={false}
-                  min={8}
-                  max={256}
-               />
-               <Button disabled={false} className="w-full" size="lg">
-                  Login
-               </Button>
-            </form>
+            <Form {...form}>
+               <form className="space-y-4">
+                  <FormField
+                     name="name"
+                     control={form.control}
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 {...field}
+                                 type="text"
+                                 placeholder="Enter your name"
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <FormField
+                     name="email"
+                     control={form.control}
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 {...field}
+                                 type="text"
+                                 placeholder="Enter email address"
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <FormField
+                     name="password"
+                     control={form.control}
+                     render={({ field }) => (
+                        <FormItem>
+                           <FormControl>
+                              <Input
+                                 {...field}
+                                 type="password"
+                                 placeholder="Enter password"
+                              />
+                           </FormControl>
+                           <FormMessage />
+                        </FormItem>
+                     )}
+                  />
+                  <Button disabled={false} className="w-full" size="lg">
+                     Login
+                  </Button>
+               </form>
+            </Form>
          </CardContent>
          <div className="px-7">
             <DottedSeparator />
@@ -94,6 +126,15 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
                <FaGithub className="mr-2 size-5" />
                Login with Github
             </Button>
+         </CardContent>
+         <div className="px-7">
+            <DottedSeparator />
+         </div>
+         <CardContent className="p-7 flex justify-center items-center">
+            <p>Already have an account?</p>
+            <Link href="/sign-in">
+               <span className="text-blue-700">&nbsp;Sign In</span>
+            </Link>
          </CardContent>
       </Card>
    );
