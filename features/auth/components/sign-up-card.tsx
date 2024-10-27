@@ -24,20 +24,22 @@ import {
    FormItem,
    FormMessage,
 } from "@/components/ui/form";
+import { signUpSchema } from "../schemas";
+import { useRegister } from "../api/use-register";
 
 interface SignUpCardProps {}
 
-const formSchema = z.object({
-   name: z.string().trim().min(1, "Requered"),
-   email: z.string().email(),
-   password: z.string().min(8, "Minimum of 8 characters requered"),
-});
-
 export const SignUpCard: React.FC<SignUpCardProps> = () => {
-   const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
+   const { mutate } = useRegister();
+
+   const form = useForm<z.infer<typeof signUpSchema>>({
+      resolver: zodResolver(signUpSchema),
       defaultValues: { name: "", email: "", password: "" },
    });
+
+   const handleSubmit = (values: z.infer<typeof signUpSchema>) => {
+      mutate({ json: values });
+   };
 
    return (
       <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -59,7 +61,7 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
          </div>
          <CardContent className="p-6">
             <Form {...form}>
-               <form className="space-y-4">
+               <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
                   <FormField
                      name="name"
                      control={form.control}

@@ -18,24 +18,21 @@ import {
    FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
+import { signInSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
 
 interface SignInCardProps {}
 
-const formSchema = z.object({
-   email: z.string().email(),
-   password: z.string().min(8, "Minimum of 8 characters requered"),
-});
-
 export const SignInCard: React.FC<SignInCardProps> = () => {
-   const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
+   const { mutate } = useLogin();
+
+   const form = useForm<z.infer<typeof signInSchema>>({
+      resolver: zodResolver(signInSchema),
       defaultValues: { email: "", password: "" },
    });
 
-   const handleSubmit = (values: z.infer<typeof formSchema>) => {
-      console.log("====================================");
-      console.log(values);
-      console.log("====================================");
+   const handleSubmit = (values: z.infer<typeof signInSchema>) => {
+      mutate({ json: values });
    };
 
    return (
