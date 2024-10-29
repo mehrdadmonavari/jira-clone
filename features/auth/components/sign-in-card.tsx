@@ -24,7 +24,7 @@ import { useLogin } from "../api/use-login";
 interface SignInCardProps {}
 
 export const SignInCard: React.FC<SignInCardProps> = () => {
-   const { mutate } = useLogin();
+   const { mutate, isPending } = useLogin();
 
    const form = useForm<z.infer<typeof signInSchema>>({
       resolver: zodResolver(signInSchema),
@@ -78,7 +78,7 @@ export const SignInCard: React.FC<SignInCardProps> = () => {
                         </FormItem>
                      )}
                   />
-                  <Button disabled={false} className="w-full" size="lg">
+                  <Button disabled={isPending} className="w-full" size="lg">
                      Login
                   </Button>
                </form>
@@ -88,11 +88,11 @@ export const SignInCard: React.FC<SignInCardProps> = () => {
             <DottedSeparator />
          </div>
          <CardContent className="p-7 flex flex-col gap-y-4">
-            <Button disabled={false} variant="secondary" className="w-full" size="lg">
+            <Button disabled={isPending} variant="secondary" className="w-full" size="lg">
                <FcGoogle className="mr-2 size-5" />
                Login with Google
             </Button>
-            <Button disabled={false} variant="secondary" className="w-full" size="lg">
+            <Button disabled={isPending} variant="secondary" className="w-full" size="lg">
                <FaGithub className="mr-2 size-5" />
                Login with Github
             </Button>

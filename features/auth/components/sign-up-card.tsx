@@ -30,7 +30,7 @@ import { useRegister } from "../api/use-register";
 interface SignUpCardProps {}
 
 export const SignUpCard: React.FC<SignUpCardProps> = () => {
-   const { mutate } = useRegister();
+   const { mutate, isPending } = useRegister();
 
    const form = useForm<z.infer<typeof signUpSchema>>({
       resolver: zodResolver(signUpSchema),
@@ -110,8 +110,8 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
                         </FormItem>
                      )}
                   />
-                  <Button disabled={false} className="w-full" size="lg">
-                     Login
+                  <Button disabled={isPending} className="w-full" size="lg">
+                     Register
                   </Button>
                </form>
             </Form>
@@ -120,11 +120,11 @@ export const SignUpCard: React.FC<SignUpCardProps> = () => {
             <DottedSeparator />
          </div>
          <CardContent className="p-7 flex flex-col gap-y-4">
-            <Button disabled={false} variant="secondary" className="w-full" size="lg">
+            <Button disabled={isPending} variant="secondary" className="w-full" size="lg">
                <FcGoogle className="mr-2 size-5" />
                Login with Google
             </Button>
-            <Button disabled={false} variant="secondary" className="w-full" size="lg">
+            <Button disabled={isPending} variant="secondary" className="w-full" size="lg">
                <FaGithub className="mr-2 size-5" />
                Login with Github
             </Button>
