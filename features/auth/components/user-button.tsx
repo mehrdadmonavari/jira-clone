@@ -21,7 +21,7 @@ export const UserButton: React.FC<UserButtonprops> = ({}) => {
 
    if (isLoading)
       return (
-         <div className="size-10 rounded-full flex justify-self-center items-center bg-neutral-200 border border-neutral-300">
+         <div className="size-10 rounded-full flex justify-center items-center bg-neutral-200 border border-neutral-300">
             <Loader className="size-4 animate-spin text-muted-foreground" />
          </div>
       );
@@ -37,7 +37,7 @@ export const UserButton: React.FC<UserButtonprops> = ({}) => {
       <DropdownMenu>
          <DropdownMenuTrigger className="outline-none relative">
             <Avatar className="size-10 border border-neutral-300 transition hover:opacity-75">
-               <AvatarFallback className="bg-neutral-200 font-medium text-neutral-300 flex justify-center items-center">
+               <AvatarFallback className="bg-neutral-200 font-medium text-neutral-500 flex justify-center items-center">
                   {avatarFallback}
                </AvatarFallback>
             </Avatar>
@@ -45,7 +45,7 @@ export const UserButton: React.FC<UserButtonprops> = ({}) => {
          <DropdownMenuContent align="end" side="bottom" className="w-60" sideOffset={10}>
             <div className="flex flex-col justify-center items-center gap-2 px-2.5 py-4">
                <Avatar className="size-[52px] border border-neutral-300">
-                  <AvatarFallback className="bg-neutral-200 font-medium text-xl text-neutral-300 flex justify-center items-center">
+                  <AvatarFallback className="bg-neutral-200 font-medium text-xl text-neutral-500 flex justify-center items-center">
                      {avatarFallback}
                   </AvatarFallback>
                </Avatar>
