@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useCurrent } from "@/features/auth/api/use-current";
 import { useLogout } from "@/features/auth/api/use-logout";
+import { UserButton } from "@/features/auth/components/user-button";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -20,13 +21,5 @@ export default function Home() {
          Loading ...
       </div>;
 
-   return (
-      <div className="flex flex-col justify-center items-center text-2xl text-center py-8">
-         this is vislble obly to outhorized users. if your not, you will redirect to
-         signUp/signIn page.
-         <Button onClick={() => mutate()} className="px-6 mt-4">
-            logout
-         </Button>
-      </div>
-   );
+   return <UserButton />;
 }
