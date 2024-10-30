@@ -34,7 +34,7 @@ export const UserButton: React.FC<UserButtonprops> = ({}) => {
       : email.charAt(0).toUpperCase() ?? "U";
 
    return (
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
          <DropdownMenuTrigger className="outline-none relative">
             <Avatar className="size-10 border border-neutral-300 transition hover:opacity-75">
                <AvatarFallback className="bg-neutral-200 font-medium text-neutral-500 flex justify-center items-center">
