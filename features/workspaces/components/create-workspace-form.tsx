@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createWorkspaceSchema } from "../schemas";
@@ -18,6 +18,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspaces } from "../api/use-create-workspaces";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import Image from "next/image";
+import { ImageIcon } from "lucide-react";
 
 interface CreateWorkspaceFormProps {
    onCancle?: () => void;
@@ -25,6 +28,7 @@ interface CreateWorkspaceFormProps {
 
 export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCancle }) => {
    const { mutate, isPending } = useCreateWorkspaces();
+   const inputRef = useRef<HTMLInputElement>(null);
 
    const form = useForm<z.infer<typeof createWorkspaceSchema>>({
       resolver: zodResolver(createWorkspaceSchema),
@@ -34,7 +38,24 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCanc
    });
 
    const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-      mutate({ json: values });
+      const finalValues = {
+         ...values,
+         image: values.image instanceof File ? values.image : "",
+      };
+
+      mutate(
+         { form: finalValues },
+         {
+            onSuccess: () => {
+               form.reset();
+            },
+         }
+      );
+   };
+
+   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) form.setValue("image", file);
    };
 
    return (
@@ -42,7 +63,7 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCanc
          <CardHeader className="flex p-7">
             <CardTitle className="text-xl fonr-bold">Create a new workspace</CardTitle>
          </CardHeader>
-         <div className="px-7">
+         <div className="px-7 mb-7">
             <DottedSeparator />
          </div>
          <CardContent className="px-7">
@@ -60,6 +81,59 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCanc
                               </FormControl>
                               <FormMessage />
                            </FormItem>
+                        )}
+                     />
+                     <FormField
+                        control={form.control}
+                        name="image"
+                        render={({ field }) => (
+                           <div className="flex flex-col gap-y-2">
+                              <div className="flex items-center gap-x-5">
+                                 {field.value ? (
+                                    <div className="size-[72px] relative rounded-md overflow-hidden">
+                                       <Image
+                                          src={
+                                             field.value instanceof File
+                                                ? URL.createObjectURL(field.value)
+                                                : field.value
+                                          }
+                                          fill
+                                          className="object-cover"
+                                          alt="Logo"
+                                       />
+                                    </div>
+                                 ) : (
+                                    <Avatar className="size-[72px]">
+                                       <AvatarFallback>
+                                          <ImageIcon className="size-[36px] text-neutral-400" />
+                                       </AvatarFallback>
+                                    </Avatar>
+                                 )}
+                                 <div className="flex flex-col">
+                                    <p className="text-sm">Workspace Icon</p>
+                                    <p className="text-sm text-muted-foreground">
+                                       JPG, PNG, SVG or JPEG, max 1mb
+                                    </p>
+                                    <input
+                                       className="hidden"
+                                       type="file"
+                                       accept=".jpg, .png, .jpeg, .svg"
+                                       ref={inputRef}
+                                       onChange={handleImageChange}
+                                       disabled={isPending}
+                                    />
+                                    <Button
+                                       onClick={() => inputRef.current?.click()}
+                                       disabled={isPending}
+                                       type="button"
+                                       variant="teritary"
+                                       size="xs"
+                                       className="w-fit mt-2">
+                                       Upload Image
+                                    </Button>
+                                 </div>
+                              </div>
+                           </div>
                         )}
                      />
                   </div>
