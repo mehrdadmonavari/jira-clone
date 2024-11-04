@@ -13,9 +13,9 @@ import { log } from "console";
 const app = new Hono()
    .get("/", sessionMiddleware, async (c) => {
       const user = c.get("user");
-      const database = c.get("databases");
+      const databases = c.get("databases");
 
-      const members = await database.listDocuments(DATABASE_ID, MEMBERS_ID, [
+      const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
          Query.equal("userId", user.$id),
       ]);
 
@@ -23,7 +23,7 @@ const app = new Hono()
 
       const workspaceIds = members.documents.map((member) => member.workspaceId);
 
-      const workspaces = await database.listDocuments(DATABASE_ID, WORKSPACES_ID, [
+      const workspaces = await databases.listDocuments(DATABASE_ID, WORKSPACES_ID, [
          Query.orderDesc("$createdAt"),
          Query.contains("$id", workspaceIds),
       ]);
