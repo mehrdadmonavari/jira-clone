@@ -21,12 +21,14 @@ import { useCreateWorkspaces } from "../api/use-create-workspaces";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface CreateWorkspaceFormProps {
    onCancle?: () => void;
 }
 
 export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCancle }) => {
+   const router = useRouter();
    const { mutate, isPending } = useCreateWorkspaces();
    const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,8 +48,9 @@ export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCanc
       mutate(
          { form: finalValues },
          {
-            onSuccess: () => {
+            onSuccess: ({ data }) => {
                form.reset();
+               router.push(`/workspaces/${data.$id}`);
             },
          }
       );
