@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateWorkspaces } from "../api/use-create-workspaces";
+import { useCreateWorkspace } from "../api/use-create-workspace";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
@@ -30,7 +30,7 @@ interface CreateWorkspaceFormProps {
 
 export const CreateWorkspaceForm: React.FC<CreateWorkspaceFormProps> = ({ onCancle }) => {
    const router = useRouter();
-   const { mutate, isPending } = useCreateWorkspaces();
+   const { mutate, isPending } = useCreateWorkspace();
    const inputRef = useRef<HTMLInputElement>(null);
 
    const form = useForm<z.infer<typeof createWorkspaceSchema>>({

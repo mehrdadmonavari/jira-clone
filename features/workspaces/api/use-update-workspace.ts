@@ -4,28 +4,34 @@ import { InferRequestType, InferResponseType } from "hono";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-type RequerstType = InferRequestType<(typeof client.api.workspaces)["$post"]>;
-type ResponseType = InferResponseType<(typeof client.api.workspaces)["$post"]>;
+type RequerstType = InferRequestType<
+   (typeof client.api.workspaces)[":workspaceId"]["$patch"]
+>;
+type ResponseType = InferResponseType<
+   (typeof client.api.workspaces)[":workspaceId"]["$patch"]
+>;
 
-export const useCreateWorkspaces = () => {
-   const router = useRouter();
+export const useUpdateWorkspace = () => {
    const queryClient = useQueryClient();
 
    const mutation = useMutation<ResponseType, Error, RequerstType>({
-      mutationFn: async ({ form }) => {
-         const response = await client.api.workspaces["$post"]({ form });
+      mutationFn: async ({ form, param }) => {
+         const response = await client.api.workspaces[":workspaceId"]["$patch"]({
+            form,
+            param,
+         });
 
          if (!response.ok) throw new Error("Faild to create workspace");
 
          return await response.json();
       },
       onSuccess: () => {
-         toast.success("Workspace created")
+         toast.success("Workspace created");
          queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       },
       onError: () => {
-         toast.error("Faild to create workspace")
-      }
+         toast.error("Faild to create workspace");
+      },
    });
 
    return mutation;
