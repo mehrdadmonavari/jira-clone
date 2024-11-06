@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 type RequerstType = InferRequestType<(typeof client.api.workspaces)["$post"]>;
-type ResponseType = InferResponseType<(typeof client.api.workspaces)["$post"], 200>;
+type ResponseType = InferResponseType<(typeof client.api.workspaces)["$post"]>;
 
 export const useCreateWorkspace = () => {
    const queryClient = useQueryClient();
@@ -14,17 +14,16 @@ export const useCreateWorkspace = () => {
       mutationFn: async ({ form }) => {
          const response = await client.api.workspaces["$post"]({ form });
 
-         if (!response.ok) throw new Error("Faild to update workspace");
+         if (!response.ok) throw new Error("Faild to create workspace");
 
          return await response.json();
       },
-      onSuccess: ({ data }) => {
-         toast.success("Workspace updated");
+      onSuccess: () => {
+         toast.success("Workspace created");
          queryClient.invalidateQueries({ queryKey: ["workspaces"] });
-         queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
       },
       onError: () => {
-         toast.error("Faild to update workspace");
+         toast.error("Faild to create workspace");
       },
    });
 

@@ -100,7 +100,7 @@ const app = new Hono()
             uploadedImageUrl = image;
          }
 
-         const workspace = databases.updateDocument(
+         const workspace = await databases.updateDocument(
             DATABASE_ID,
             WORKSPACES_ID,
             workspaceId,
