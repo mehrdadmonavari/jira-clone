@@ -143,15 +143,31 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
                                        onChange={handleImageChange}
                                        disabled={isPending}
                                     />
-                                    <Button
-                                       onClick={() => inputRef.current?.click()}
-                                       disabled={isPending}
-                                       type="button"
-                                       variant="teritary"
-                                       size="xs"
-                                       className="w-fit mt-2">
-                                       Upload Image
-                                    </Button>
+                                    {field.value ? (
+                                       <Button
+                                          onClick={() => {
+                                             field.onChange(null);
+                                             if (inputRef.current)
+                                                inputRef.current.value = "";
+                                          }}
+                                          disabled={isPending}
+                                          type="button"
+                                          variant="destructive"
+                                          size="xs"
+                                          className="w-fit mt-2">
+                                          Remove Image
+                                       </Button>
+                                    ) : (
+                                       <Button
+                                          onClick={() => inputRef.current?.click()}
+                                          disabled={isPending}
+                                          type="button"
+                                          variant="teritary"
+                                          size="xs"
+                                          className="w-fit mt-2">
+                                          Upload Image   
+                                       </Button>
+                                    )}
                                  </div>
                               </div>
                            </div>
@@ -174,7 +190,7 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
                         type="submit"
                         variant="primary"
                         size="lg">
-                        Create Workspace
+                        Update Workspace
                      </Button>
                   </div>
                </form>
