@@ -23,7 +23,7 @@ export const useJoinWorkspace = () => {
          });
 
          if (!response.ok) throw new Error("Faild to join workspace");
-
+         // TODO: handle errors better
          return await response.json();
       },
       onSuccess: ({ data }) => {

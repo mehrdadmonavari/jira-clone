@@ -94,6 +94,8 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
          { param: { workspaceId: initialValues.$id } },
          {
             onSuccess: () => {
+               // TODO: i dont now how to clear the cash. we need to clear the cash
+               router.refresh();
                window.location.href = "/";
             },
          }
@@ -108,7 +110,9 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
          { param: { workspaceId: initialValues.$id } },
          {
             onSuccess: () => {
+               // TODO: i dont now how to clear the cash. we need to clear the cash
                router.refresh();
+               window.location.href = "/";
             },
          }
       );
@@ -125,6 +129,7 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
    return (
       <div className="flex flex-col gap-y-4">
          <DeleteDialog />
+         <ResetDialog />
          <Card className="w-full h-full border-none shadow-none">
             <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
                <Button
@@ -280,7 +285,7 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
                   </div>
                   <DottedSeparator className="pt-7" />
                   <Button
-                     onClick={handleDelete}
+                     onClick={handleResetInviteCode}
                      disabled={isPending || isDeleteWorkspace || isResetingInviteCode}
                      className="mt-6 w-fit ml-auto"
                      size="sm"
