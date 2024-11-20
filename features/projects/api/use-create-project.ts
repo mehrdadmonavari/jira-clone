@@ -4,7 +4,7 @@ import { InferRequestType, InferResponseType } from "hono";
 import { toast } from "sonner";
 
 type RequerstType = InferRequestType<(typeof client.api.projects)["$post"]>;
-type ResponseType = InferResponseType<(typeof client.api.projects)["$post"]>;
+type ResponseType = InferResponseType<(typeof client.api.projects)["$post"], 200>;
 
 export const useCreateProject = () => {
    const queryClient = useQueryClient();

@@ -62,7 +62,6 @@ const app = new Hono()
          ID.unique(),
          {
             name: name,
-            userId: user.$id,
             imageUrl: uploadedImageUrl,
             workspaceId,
          }
