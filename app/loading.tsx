@@ -5,7 +5,7 @@ import React from "react";
 
 const LoadingPage: React.FC = () => {
    return (
-      <div className="flex flex-col gap-y-4 justify-center items-center mt-48 md:mt-64">
+      <div className="h-screen flex flex-col gap-y-4 justify-center items-center">
          <Loader className="size-6 animate-spin" />
       </div>
    );
