@@ -16,8 +16,6 @@ export const Projects: React.FC<ProjectsProps> = ({}) => {
    const pathname = usePathname();
 
    const { open } = useCreateProjectModal();
-   const projectId = null;
-   // const projectId = useProjectId();
    const workspaceId = useWorkspaceId();
    const { data: projects } = useGetProjects({ workspaceId });
 
@@ -31,7 +29,7 @@ export const Projects: React.FC<ProjectsProps> = ({}) => {
             />
          </div>
          {projects?.documents.map((project) => {
-            const href = `/workspaces/${workspaceId}/projects/${projectId}`;
+            const href = `/workspaces/${workspaceId}/projects/${project.$id}`;
             const isActive = pathname === href;
             return (
                <Link href={href}>
