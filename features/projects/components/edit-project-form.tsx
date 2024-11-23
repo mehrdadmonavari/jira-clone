@@ -26,6 +26,7 @@ import { Project } from "../types";
 import { updateProjectSchema } from "../schemas";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useUpdateProject } from "../api/use-update-project";
+import { useDeleteProject } from "../api/use-delete-project";
 
 interface EditProjectFormProps {
    onCancle?: () => void;
@@ -38,7 +39,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
 }) => {
    const router = useRouter();
    const { mutate, isPending } = useUpdateProject();
-   // const { mutate: deleteWorkspace, isPending: isDeleteWorkspace } = useDeleteWorkspace();
+   const { mutate: deleteProject, isPending: isDeletingProject } = useDeleteProject();
    const inputRef = useRef<HTMLInputElement>(null);
 
    const [DeleteDialog, confirmDelete] = useConfirm(
@@ -80,16 +81,14 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
       const ok = await confirmDelete();
       if (!ok) return;
 
-      // deleteWorkspace(
-      //    { param: { workspaceId: initialValues.$id } },
-      //    {
-      //       onSuccess: () => {
-      //          // TODO: i dont now how to clear the cash. we need to clear the cash
-      //          router.refresh();
-      //          window.location.href = "/";
-      //       },
-      //    }
-      // );
+      deleteProject(
+         { param: { projectId: initialValues.$id } },
+         {
+            onSuccess: () => {
+               window.location.href = `/workspaces/${initialValues.workspaceId}`;
+            },
+         }
+      );
    };
 
    return (
@@ -170,7 +169,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                                           accept=".jpg, .png, .jpeg, .svg"
                                           ref={inputRef}
                                           onChange={handleImageChange}
-                                          disabled={isPending}
+                                          disabled={isPending || isDeletingProject}
                                        />
                                        {field.value ? (
                                           <Button
@@ -179,7 +178,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                                                 if (inputRef.current)
                                                    inputRef.current.value = "";
                                              }}
-                                             disabled={isPending}
+                                             disabled={isPending || isDeletingProject}
                                              type="button"
                                              variant="destructive"
                                              size="xs"
@@ -189,7 +188,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                                        ) : (
                                           <Button
                                              onClick={() => inputRef.current?.click()}
-                                             disabled={isPending}
+                                             disabled={isPending || isDeletingProject}
                                              type="button"
                                              variant="teritary"
                                              size="xs"
@@ -207,7 +206,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                      <div className="flex justify-between items-center">
                         <Button
                            onClick={onCancle}
-                           disabled={isPending}
+                           disabled={isPending || isDeletingProject}
                            className={cn(!onCancle && "invisible")}
                            type="button"
                            variant="secondary"
@@ -215,7 +214,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                            Cancle
                         </Button>
                         <Button
-                           disabled={isPending}
+                           disabled={isPending || isDeletingProject}
                            type="submit"
                            variant="primary"
                            size="lg">
@@ -237,7 +236,7 @@ export const EditProjectForm: React.FC<EditProjectFormProps> = ({
                   <DottedSeparator className="pt-7" />
                   <Button
                      onClick={handleDelete}
-                     disabled={isPending}
+                     disabled={isPending || isDeletingProject}
                      className="mt-6 w-fit ml-auto"
                      size="sm"
                      variant="destructive"
