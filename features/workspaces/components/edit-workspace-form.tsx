@@ -73,9 +73,8 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
       mutate(
          { form: finalValues, param: { workspaceId: initialValues?.$id } },
          {
-            onSuccess: ({ data }) => {
+            onSuccess: () => {
                form.reset();
-               router.push(`/workspaces/${data.$id}`);
             },
          }
       );
@@ -106,16 +105,7 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
       const ok = await resetConfirm();
       if (!ok) return;
 
-      resetinviteCode(
-         { param: { workspaceId: initialValues.$id } },
-         {
-            onSuccess: () => {
-               // TODO: i dont now how to clear the cash. we need to clear the cash
-               router.refresh();
-               window.location.href = "/";
-            },
-         }
-      );
+      resetinviteCode({ param: { workspaceId: initialValues.$id } });
    };
 
    const handleCopyInviteLink = () => {
