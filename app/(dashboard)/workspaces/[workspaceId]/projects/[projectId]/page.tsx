@@ -1,17 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { getProject } from "@/features/projects/queries";
+import { getWorkspace } from "@/features/workspaces/queries";
 import { PencilIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 interface ProjectIdPageProps {
    params: {
+      workspaceId: string;
       projectId: string;
    };
 }
 
-const ProjectIdPage: React.FC<ProjectIdPageProps> = async ({ params: { projectId } }) => {
+const ProjectIdPage: React.FC<ProjectIdPageProps> = async ({
+   params: { workspaceId, projectId },
+}) => {
+   const workspace = await getWorkspace({ workspaceId });
+   if (!workspace) throw new Error("Workspace not found");
+
    const initialValues = await getProject({ projectId });
    if (!initialValues) throw new Error("Project not found");
 
@@ -29,7 +36,7 @@ const ProjectIdPage: React.FC<ProjectIdPageProps> = async ({ params: { projectId
             <div className="">
                <Button variant="secondary" size="sm" asChild>
                   <Link
-                     href={`/workspace/${initialValues.workspaceid}/project/${initialValues.$id}/settings`}>
+                     href={`/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}/settings`}>
                      <PencilIcon className="size-4" />
                      Edit project
                   </Link>

@@ -15,7 +15,7 @@ const WorkspaceIdSettingsPage: React.FC<WorkspaceIdSettingsPageProps> = async ({
    if (!user) redirect("/sign-in");
 
    const initialValues = await getWorkspace({ workspaceId: params.workspaceId });
-   if (!initialValues) redirect(`/workspaces/${params.workspaceId}`);
+   if (!initialValues) throw new Error("Workspace not found");
 
    return (
       <div className="w-full lg:max-w-xl">
