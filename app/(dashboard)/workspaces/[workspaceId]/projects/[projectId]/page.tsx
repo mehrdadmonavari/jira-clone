@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { getProject } from "@/features/projects/queries";
+import { TasksViewSwitcher } from "@/features/tasks/components/tasks-view-switcher";
 import { getWorkspace } from "@/features/workspaces/queries";
 import { PencilIcon } from "lucide-react";
 import Link from "next/link";
@@ -43,6 +44,7 @@ const ProjectIdPage: React.FC<ProjectIdPageProps> = async ({
                </Button>
             </div>
          </div>
+         <TasksViewSwitcher />
       </div>
    );
 };
