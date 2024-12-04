@@ -5,7 +5,7 @@ import { zValidator } from "@hono/zod-validator";
 import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { TaskStatus } from "../types";
-import { createTasksSchema } from "../schemas";
+import { createTaskSchema } from "../schemas";
 import { getMember } from "@/features/members/utils";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "@/features/projects/types";
@@ -20,7 +20,7 @@ const app = new Hono()
             workspaceId: z.string(),
             projectId: z.string().nullish(),
             assigneeId: z.string().nullish(),
-            status: z.nativeEnum(TaskStatus),
+            status: z.nativeEnum(TaskStatus).nullish(),
             dueDate: z.string().nullish(),
             search: z.string().nullish(),
          })
@@ -89,7 +89,7 @@ const app = new Hono()
          return c.json({ data: { ...tasks, documents: populatedTasks } });
       }
    )
-   .post("/", sessionMiddleware, zValidator("json", createTasksSchema), async (c) => {
+   .post("/", sessionMiddleware, zValidator("json", createTaskSchema), async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
       const { name, status, dueDate, workspaceId, projectId, assigneeId } =
@@ -101,7 +101,7 @@ const app = new Hono()
       const highestPosiotionTask = await databases.listDocuments(DATABASE_ID, TASKS_ID, [
          Query.equal("status", status),
          Query.equal("workspaceId", workspaceId),
-         Query.orderAsc("posotion"),
+         Query.orderAsc("position"),
          Query.limit(1),
       ]);
 

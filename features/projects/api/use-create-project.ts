@@ -22,7 +22,7 @@ export const useCreateProject = () => {
          queryClient.invalidateQueries({ queryKey: ["projects"] });
       },
       onError: () => {
-         toast.error("Faild to create projects");
+         toast.error("Faild to create project");
       },
    });
 
