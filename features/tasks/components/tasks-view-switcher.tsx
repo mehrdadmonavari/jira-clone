@@ -13,6 +13,7 @@ import { DataFilters } from "./data-filters";
 import { useTaskFilters } from "../hooks/use-task-filters";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
+import { Datakanban } from "./data-kanban";
 
 interface TasksViewSwitcherProps {}
 
@@ -67,7 +68,7 @@ export const TasksViewSwitcher: React.FC<TasksViewSwitcherProps> = ({}) => {
                      <DataTable columns={columns} data={tasks?.documents ?? []} />
                   </TabsContent>
                   <TabsContent value="kanban" className="mt-0">
-                     kanban
+                     <Datakanban data={tasks?.documents ?? []} />
                   </TabsContent>
                   <TabsContent value="calendar" className="mt-0">
                      calendar
