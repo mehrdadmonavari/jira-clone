@@ -10,6 +10,7 @@ import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteTask } from "../api/use-delete-task";
 import { useRouter } from "next/navigation";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 
 interface TaskActionsProps {
    id: string;
@@ -21,6 +22,7 @@ export const TaskActions: React.FC<TaskActionsProps> = ({ id, projectId, childre
    const workspaceId = useWorkspaceId();
    const router = useRouter();
 
+   const { open } = useEditTaskModal();
    const [ConfirmDialog, confirm] = useConfirm(
       "Delete task",
       "This action cannot be undone",
@@ -36,12 +38,12 @@ export const TaskActions: React.FC<TaskActionsProps> = ({ id, projectId, childre
    };
 
    const onOpenTask = () => {
-      router.push(`/workspaces/${workspaceId}/task/${id}`)
-   }
+      router.push(`/workspaces/${workspaceId}/task/${id}`);
+   };
 
    const onOpenProject = () => {
-      router.push(`/workspaces/${workspaceId}/projects/${projectId}`)
-   }
+      router.push(`/workspaces/${workspaceId}/projects/${projectId}`);
+   };
 
    return (
       <div className="flex justify-end">
@@ -64,7 +66,7 @@ export const TaskActions: React.FC<TaskActionsProps> = ({ id, projectId, childre
                   Open Project
                </DropdownMenuItem>
                <DropdownMenuItem
-                  onClick={() => {}}
+                  onClick={() => open(id)}
                   disabled={isPending}
                   className="font-medium p-[10px]">
                   <PencilIcon className="size-4 mr-2 stroke-2" />

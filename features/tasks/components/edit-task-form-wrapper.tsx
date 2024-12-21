@@ -4,17 +4,21 @@ import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { Loader } from "lucide-react";
 import React from "react";
-import { CreateTaskForm } from "./create-task-form";
+import { useGetTask } from "../api/use-get-task";
+import { EditTaskForm } from "./edit-task-form";
 
-interface CreateTaskFormWrapperProps {
+interface EditTaskFormWrapperProps {
    onCancel: () => void;
+   id: string;
 }
 
-export const CreateTaskFormWrapper: React.FC<CreateTaskFormWrapperProps> = ({
+export const EditTaskFormWrapper: React.FC<EditTaskFormWrapperProps> = ({
    onCancel,
+   id,
 }) => {
    const workspaceId = useWorkspaceId();
 
+   const { data: initialValues, isLoading: isLoadingTask } = useGetTask({ taskId: id });
    const { data: Projects, isLoading: isLoadingProjects } = useGetProjects({
       workspaceId,
    });
@@ -36,7 +40,7 @@ export const CreateTaskFormWrapper: React.FC<CreateTaskFormWrapperProps> = ({
       };
    });
 
-   const isLoading = isLoadingProjects || isLoadingMembers;
+   const isLoading = isLoadingProjects || isLoadingMembers || isLoadingTask;
    if (isLoading) {
       return (
          <Card className="w-full h-[714px] border-none shadow-none">
@@ -47,8 +51,11 @@ export const CreateTaskFormWrapper: React.FC<CreateTaskFormWrapperProps> = ({
       );
    }
 
+   if (!initialValues) return null;
+
    return (
-      <CreateTaskForm
+      <EditTaskForm
+         initialValues={initialValues}
          onCancle={onCancel}
          projectOptions={projectOptions ?? []}
          memberOptions={memberOptions ?? []}

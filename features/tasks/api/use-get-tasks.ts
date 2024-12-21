@@ -33,7 +33,7 @@ export const useGetTasks = ({
             },
          });
 
-         if (!response.ok) throw new Error("Faild to fetch workspaces");
+         if (!response.ok) throw new Error("Faild to fetch tasks");
 
          const { data } = await response.json();
 

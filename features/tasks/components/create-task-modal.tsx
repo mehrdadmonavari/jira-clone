@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { ResponsiveModal } from "@/components/responsive-modal";
@@ -12,9 +12,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = () => {
 
    return (
       <ResponsiveModal open={isOpen} onOpenChange={setIsOpen}>
-         <div>
-            <CreateTaskFormWrapper onCancel={() => setIsOpen(false)} />
-         </div>
+         <CreateTaskFormWrapper onCancel={() => setIsOpen(false)} />
       </ResponsiveModal>
    );
 };
