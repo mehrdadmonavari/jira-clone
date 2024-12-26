@@ -16,6 +16,7 @@ import { columns } from "./columns";
 import { DataKanban } from "./data-kanban";
 import { TaskStatus } from "../types";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
+import { DataCalendar } from "./data-calendar";
 
 interface TasksViewSwitcherProps {}
 
@@ -86,8 +87,8 @@ export const TasksViewSwitcher: React.FC<TasksViewSwitcherProps> = ({}) => {
                         data={tasks?.documents ?? []}
                      />
                   </TabsContent>
-                  <TabsContent value="calendar" className="mt-0">
-                     calendar
+                  <TabsContent value="calendar" className="mt-0 h-full mb-4">
+                     <DataCalendar data={tasks?.documents ?? []} />
                   </TabsContent>
                </>
             )}
