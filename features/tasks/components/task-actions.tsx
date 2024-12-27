@@ -38,7 +38,7 @@ export const TaskActions: React.FC<TaskActionsProps> = ({ id, projectId, childre
    };
 
    const onOpenTask = () => {
-      router.push(`/workspaces/${workspaceId}/task/${id}`);
+      router.push(`/workspaces/${workspaceId}/tasks/${id}`);
    };
 
    const onOpenProject = () => {

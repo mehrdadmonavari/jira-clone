@@ -44,7 +44,7 @@ const ProjectIdPage: React.FC<ProjectIdPageProps> = async ({
                </Button>
             </div>
          </div>
-         <TasksViewSwitcher />
+         <TasksViewSwitcher hideProjectFilter />
       </div>
    );
 };
