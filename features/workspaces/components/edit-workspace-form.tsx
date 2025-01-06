@@ -72,11 +72,6 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
 
       mutate(
          { form: finalValues, param: { workspaceId: initialValues?.$id } },
-         {
-            onSuccess: () => {
-               form.reset();
-            },
-         }
       );
    };
 
