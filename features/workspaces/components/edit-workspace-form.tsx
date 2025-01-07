@@ -70,9 +70,7 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
          image: values.image instanceof File ? values.image : "",
       };
 
-      mutate(
-         { form: finalValues, param: { workspaceId: initialValues?.$id } },
-      );
+      mutate({ form: finalValues, param: { workspaceId: initialValues?.$id } });
    };
 
    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,8 +86,6 @@ export const EditWorkspaceForm: React.FC<EditWorkspaceFormProps> = ({
          { param: { workspaceId: initialValues.$id } },
          {
             onSuccess: () => {
-               // TODO: i dont now how to clear the cash. we need to clear the cash
-               router.refresh();
                window.location.href = "/";
             },
          }

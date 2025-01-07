@@ -22,7 +22,11 @@ export const TaskDescription: React.FC<TaskDescriptionProps> = ({ task }) => {
             json: { description: value },
             param: { taskId: task.$id },
          },
-         { onSuccess: () => {} }
+         {
+            onSuccess: () => {
+               setIsEditing(false);
+            },
+         }
       );
    };
 
