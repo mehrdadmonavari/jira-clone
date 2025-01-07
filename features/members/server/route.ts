@@ -6,7 +6,7 @@ import { createAdminClient } from "@/lib/appwrite";
 import { getMember } from "../utils";
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { Query } from "node-appwrite";
-import { MemberRole } from "../types";
+import { Member, MemberRole } from "../types";
 
 const app = new Hono()
    .get(
@@ -27,7 +27,7 @@ const app = new Hono()
          const member = await getMember({ databases, workspaceId, userId: user.$id });
          if (!member) return c.json({ error: "Unauthorized" }, 401);
 
-         const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+         const members = await databases.listDocuments<Member>(DATABASE_ID, MEMBERS_ID, [
             Query.equal("workspaceId", workspaceId),
          ]);
 
@@ -51,7 +51,7 @@ const app = new Hono()
       const user = c.get("user");
       const databases = c.get("databases");
 
-      const memberToDelete = await databases.getDocument(
+      const memberToDelete = await databases.getDocument<Member>(
          DATABASE_ID,
          MEMBERS_ID,
          memberId

@@ -1,4 +1,3 @@
-import { useCreateProjectModal } from "@/features/projects/hooks/use-create-project-modal";
 import { Task } from "@/features/tasks/types";
 import React from "react";
 import { Button } from "./ui/button";
@@ -8,16 +7,17 @@ import Link from "next/link";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { Card, CardContent } from "./ui/card";
 import { formatDistanceToNow } from "date-fns";
+import { useCreateTaskModal } from "@/features/tasks/hooks/use-create-task-modal";
 
-interface TaskListProps {
+interface TasksListProps {
    data: Task[];
    total: number;
 }
 
-export const TaskList: React.FC<TaskListProps> = ({ data, total }) => {
+export const TasksList: React.FC<TasksListProps> = ({ data, total }) => {
    const workspaceId = useWorkspaceId();
 
-   const { open: createTask } = useCreateProjectModal();
+   const { open: createTask } = useCreateTaskModal();
 
    return (
       <div className="flex flex-col gap-y-4 col-span-1">
@@ -30,7 +30,7 @@ export const TaskList: React.FC<TaskListProps> = ({ data, total }) => {
             </div>
             <DottedSeparator className="my-4" />
             <ul className="flex flex-col gap-y-4">
-               {data.slice(0,3).map((task) => (
+               {data.slice(0, 3).map((task) => (
                   <li key={task.$id}>
                      <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
                         <Card className="shadow-none rounded-lg transition hover:opacity-75">

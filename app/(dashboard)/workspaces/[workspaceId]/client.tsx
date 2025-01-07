@@ -10,8 +10,9 @@ import { useCreateProjectModal } from "@/features/projects/hooks/use-create-proj
 import { PageLoader } from "@/components/page-loader";
 import { PageError } from "@/components/page-error";
 import { Analytics } from "@/components/analytics";
-import { TaskList } from "@/components/task-list";
-import { ProjectList } from "@/components/project-list";
+import { TasksList } from "@/components/tasks-list";
+import { ProjectsList } from "@/components/projects-list";
+import { MembersList } from "@/components/members-list";
 
 export const WorkspaceIdClient: React.FC = ({}) => {
    const workspaceId = useWorkspaceId();
@@ -39,8 +40,9 @@ export const WorkspaceIdClient: React.FC = ({}) => {
       <div className="h-full flex flex-col space-y-4">
          <Analytics data={analytics} />
          <div className="grid grid-cols1 xl:grid-cols-2 gap-4">
-            <TaskList data={tasks.documents} total={tasks.total} />
-            <ProjectList data={projects.documents} total={tasks.total} />
+            <TasksList data={tasks.documents} total={tasks.total} />
+            <ProjectsList data={projects.documents} total={tasks.total} />
+            <MembersList data={members.documents} total={members.total} />
          </div>
       </div>
    );

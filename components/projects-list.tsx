@@ -9,12 +9,12 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Project } from "@/features/projects/types";
 
-interface ProjectListProps {
+interface ProjectsListProps {
    data: Project[];
    total: number;
 }
 
-export const ProjectList: React.FC<ProjectListProps> = ({ data, total }) => {
+export const ProjectsList: React.FC<ProjectsListProps> = ({ data, total }) => {
    const workspaceId = useWorkspaceId();
 
    const { open: createProject } = useCreateProjectModal();
@@ -23,7 +23,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({ data, total }) => {
       <div className="flex flex-col gap-y-4 col-span-1">
          <div className="bg-white border rounded-lg p-4">
             <div className="flex justify-between items-center">
-               <p className="font-semibold text-lg">Tasks ({total})</p>
+               <p className="font-semibold text-lg">Projects ({total})</p>
                <Button variant="secondary" size="icon" onClick={createProject}>
                   <PlusIcon className="size-4 text-neutral-400" />
                </Button>
@@ -50,7 +50,7 @@ export const ProjectList: React.FC<ProjectListProps> = ({ data, total }) => {
                   </li>
                ))}
                <li className="text-sm text-muted-foreground text-center hidden first-of-type:block">
-                  no tasks found
+                  no projects found
                </li>
             </ul>
          </div>
