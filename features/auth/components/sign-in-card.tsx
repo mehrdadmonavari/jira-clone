@@ -20,6 +20,7 @@ import {
 import Link from "next/link";
 import { signInSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
+import { signUpWithGithub } from "@/lib/oauth";
 
 interface SignInCardProps {}
 
@@ -92,7 +93,13 @@ export const SignInCard: React.FC<SignInCardProps> = () => {
                <FcGoogle className="mr-2 size-5" />
                Login with Google
             </Button>
-            <Button disabled={isPending} variant="secondary" className="w-full" size="lg">
+            <Button
+               onClick={() => signUpWithGithub()}
+               type="button"
+               disabled={isPending}
+               variant="secondary"
+               className="w-full"
+               size="lg">
                <FaGithub className="mr-2 size-5" />
                Login with Github
             </Button>
