@@ -8,6 +8,7 @@ type RequerstType = InferRequestType<(typeof client.api.workspaces)["$post"]>;
 type ResponseType = InferResponseType<(typeof client.api.workspaces)["$post"]>;
 
 export const useCreateWorkspace = () => {
+   const router = useRouter();
    const queryClient = useQueryClient();
 
    const mutation = useMutation<ResponseType, Error, RequerstType>({
@@ -20,6 +21,7 @@ export const useCreateWorkspace = () => {
       },
       onSuccess: () => {
          toast.success("Workspace created");
+         router.refresh();
          queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       },
       onError: () => {

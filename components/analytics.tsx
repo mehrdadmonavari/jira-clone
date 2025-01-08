@@ -4,23 +4,6 @@ import { AnalyticsCard } from "./analytics-card";
 import { DottedSeparator } from "./dotted-separator";
 import { ProjectAnalyticsResponseType } from "@/features/projects/api/use-get-project-analytics";
 
-interface AnalyticsProps {
-   // data?: {
-   //    taskCount: number;
-   //    taskDifference: number;
-   //    projectCount?: number;
-   //    projectDifference?: number;
-   //    assignedTaskCount: number;
-   //    assignedTaskDiffrences: number;
-   //    completedTaskCount: number;
-   //    completedTaskDifferences: number;
-   //    incompleteTaskCount?: number;
-   //    incompleteTaskDifferences?: number;
-   //    overdueTaskCount: number;
-   //    overdueTaskDifferences: number;
-   // };
-}
-
 export const Analytics: React.FC<ProjectAnalyticsResponseType> = ({ data }) => {
    return (
       <ScrollArea className="w-full rounded-lg border whitespace-nowrap shrink-0">
