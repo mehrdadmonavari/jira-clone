@@ -4,9 +4,6 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-   console.log('====================================');
-   console.log("this is oauth route ................");
-   console.log('====================================');
    const userId = request.nextUrl.searchParams.get("userId");
    const secret = request.nextUrl.searchParams.get("secret");
 
